@@ -1,0 +1,49 @@
+stages:
+  - install_dependencies
+  - build
+  - test
+
+install_dependencies:
+  image: node:18
+  stage: install_dependencies
+  script:
+    - npm ci
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+  artifacts:
+    paths:
+      - node_modules/
+    expire_in: 1 hour
+
+build:
+  image: node:18
+  stage: build
+  dependencies:
+    - install_dependencies
+  script:
+    - npm run build -- --configuration production
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 1 hour
+
+test:
+  image: node:18
+  stage: test
+  dependencies:
+    - install_dependencies
+  before_script:
+    - apt-get update && apt-get install -y chromium-browser
+    - export CHROME_BIN=/usr/bin/chromium-browser
+  script:
+    - npm test -- --watch=false --browsers=ChromeHeadless
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
