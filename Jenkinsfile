@@ -9,14 +9,14 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 dir('request-management-ui') {
-                    sh 'npm install'
+                    bat 'npm install'  // Change sh to bat for Windows
                 }
             }
         }
         stage('Build') {
             steps {
                 dir('request-management-ui') {
-                    sh 'npm run build'
+                    bat 'npm run build'  // Change sh to bat for Windows
                 }
             }
         }
