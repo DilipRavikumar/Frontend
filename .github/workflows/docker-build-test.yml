@@ -27,7 +27,7 @@ jobs:
 
       - name: Test application
         run: |
-          curl -f http://localhost:8080 || exit 1
+          curl -f http://localhost:8080/index.html || exit 1
           echo "Application is running successfully"
 
       - name: Stop and remove container
