@@ -29,6 +29,6 @@ jobs:
         run: |
           curl -f http://localhost:8080/index.html || exit 1
           echo "Application is running successfully"
-
+#app is running successfully
       - name: Stop and remove container
         run: docker stop frontend-container && docker rm frontend-container
