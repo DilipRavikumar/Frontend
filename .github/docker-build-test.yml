@@ -3,6 +3,13 @@ name: Deployment Test - Build & Push
 on:
   push:
     branches: [ main ]
+    # Optional: only run when frontend files or this workflow change
+    paths:
+      - '**/*.ts'
+      - '**/*.html'
+      - '**/*.css'
+      - 'Dockerfile'
+      - '.github/docker-build-test.yml'
 
 jobs:
   build-test:
